@@ -13,4 +13,4 @@ ${EXEC} : $(OBJ)
 
 clean :
 	rm -r ${OBJ} ${EXEC} ${EXEC}.exe
-
+	#del *.exe

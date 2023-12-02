@@ -4,8 +4,10 @@ GameMechs::GameMechs()
 {
     input = 0;
     exitFlag = false;
-    boardSizeX = 36;
-    boardSizeY = 18;
+    boardSizeX = 30;
+    boardSizeY = 15;
+    loseFlag = false;
+    score = 0;
 }
 
 GameMechs::GameMechs(int boardX, int boardY)
@@ -14,11 +16,16 @@ GameMechs::GameMechs(int boardX, int boardY)
     exitFlag = false;
     boardSizeX = boardX;
     boardSizeY = boardY;
+    loseFlag = false;
+    score = 0;
 }
 
-// do you need a destructor?
-
-
+GameMechs::~GameMechs()
+{
+    // do you need a destructor?
+    //if so, deallocate all heap data members, defense against memory
+    //leakage, may not need if no have heap data members
+}
 
 bool GameMechs::getExitFlagStatus()
 {
@@ -44,20 +51,38 @@ int GameMechs::getBoardSizeY()
     return boardSizeY;
 }
 
-
 void GameMechs::setExitTrue()
 {
-
+    exitFlag = true;
 }
 
 void GameMechs::setInput(char this_input)
 {
-
+    input = this_input;
 }
 
 void GameMechs::clearInput()
 {
-
+    input = 0;
 }
 
+int GameMechs::getScore()
+{
+    return score;
+}
 
+void GameMechs::incrementScore()
+{
+    score++;
+    //could change later for other numbers
+}
+
+bool GameMechs::getLoseFlagStatus()
+{
+    return loseFlag;
+}
+
+void GameMechs::setLoseFlag()
+{
+    loseFlag = true;
+}

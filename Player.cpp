@@ -39,6 +39,23 @@ void Player::updatePlayerDir()
     
     switch(input)
     {
+        case 27: // exit
+        {
+            mainGameMechsRef->setExitTrue();
+            break;
+        }
+        //remove later =================================
+        case 'q': // exit
+        {
+            mainGameMechsRef->incrementScore();
+            break;
+        }
+        case 'e': // exit
+        {
+            mainGameMechsRef->setLoseFlag();
+            break;
+        }
+        //=============================================
         case 'w':
         {
             if (myDir == STOP||myDir == LEFT||myDir==RIGHT)

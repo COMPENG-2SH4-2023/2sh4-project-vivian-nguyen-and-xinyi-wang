@@ -49,13 +49,15 @@ void Initialize(void)
 
 void GetInput(void)
 {
-    
+    //already got for player in run logic function by using updatePlayerDir() from game mechanics. 
 }
 
 void RunLogic(void)
 {
     myPlayer->updatePlayerDir();
     myPlayer->movePlayer();
+    myGM->clearInput();
+
 }
 
 void DrawScreen(void)
@@ -64,11 +66,6 @@ void DrawScreen(void)
 
     objPos tempPos;
     myPlayer->getPlayerPos(tempPos);
-
-    MacUILib_printf("BoardSize: %dx%d, Player Pos: <%d, %d> + %c\n",
-                myGM->getBoardSizeX(), myGM->getBoardSizeY(),
-                tempPos.x, tempPos.y, tempPos.symbol);
-
     
     for (int row =0; row<myGM->getBoardSizeY(); row++)
     {
@@ -92,6 +89,18 @@ void DrawScreen(void)
         }
         MacUILib_printf("\n");
     }
+
+    MacUILib_printf("BoardSize: %dx%d, Player Pos: <%d, %d> + %c\n",
+        myGM->getBoardSizeX(), myGM->getBoardSizeY(),
+        tempPos.x, tempPos.y, tempPos.symbol);
+    
+    MacUILib_printf("Score: %d\n",
+        myGM->getScore());
+    
+    if (myGM->getLoseFlagStatus() == true)
+    {
+        MacUILib_printf("loss");
+    }
 }
 
 void LoopDelay(void)
@@ -102,7 +111,8 @@ void LoopDelay(void)
 
 void CleanUp(void)
 {
-    MacUILib_clearScreen();    
-  
+    delete myGM;
+    delete myPlayer;
+    MacUILib_clearScreen();   
     MacUILib_uninit();
 }
