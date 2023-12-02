@@ -8,6 +8,8 @@ GameMechs::GameMechs()
     boardSizeY = 15;
     loseFlag = false;
     score = 0;
+
+    foodPos.setObjPos(-1, -1, 'o'); //init outside game board remove later
 }
 
 GameMechs::GameMechs(int boardX, int boardY)
@@ -18,6 +20,7 @@ GameMechs::GameMechs(int boardX, int boardY)
     boardSizeY = boardY;
     loseFlag = false;
     score = 0;
+    foodPos.setObjPos(-1, -1, 'o'); //init outside game board remove later - also think about where to seed the rng
 }
 
 GameMechs::~GameMechs()
@@ -37,6 +40,10 @@ char GameMechs::getInput()
     if (MacUILib_hasChar())
     {
         input = MacUILib_getChar();
+        if (input == 27)
+        {
+            setExitTrue();
+        }
     }
     return input;
 }
@@ -85,4 +92,16 @@ bool GameMechs::getLoseFlagStatus()
 void GameMechs::setLoseFlag()
 {
     loseFlag = true;
+}
+
+void  GameMechs::generateFood(objPos blockOff) //remove
+{
+    //generate random x and y coord and make sure they are not border or blockoff position
+    //check x and y against  0 and boardsize x and y
+    // remember objPos class has is posequal; use isntead of comparing element by element
+}
+
+void g GameMechs::etFoodPos(objPos &returnPos) //remove
+{
+
 }

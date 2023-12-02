@@ -29,21 +29,10 @@ void Player::updatePlayerDir()
 {
     // PPA3 input processing logic
 
-    //where do i get input how do i check for input? hint:
-    //def not by calling mac ui lib get char()
-    //coordinate with ur teammember who is designing game mechanism class
-    //there will be game mechanism class that collectively check input and store most recent input
-    //u just need to figure how to get to it. how? it lies within GameMechs*
-    //inside ur private member
     char input = mainGameMechsRef->getInput();
     
     switch(input)
     {
-        case 27: // exit
-        {
-            mainGameMechsRef->setExitTrue();
-            break;
-        }
         //remove later =================================
         case 'q': // exit
         {

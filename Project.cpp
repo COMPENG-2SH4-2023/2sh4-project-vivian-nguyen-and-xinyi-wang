@@ -45,11 +45,16 @@ void Initialize(void)
 
     myGM = new GameMechs (36, 18); //board size
     myPlayer = new Player (myGM);
+
+    //think of when to gen new food; in ppa3 we gen in init and somewhere
+    //think if u want to set a debug key to call the food gen routine for verification
+    //rmbr gen food requires player reference. provide after player obj is instantiated.
 }
 
 void GetInput(void)
 {
     //already got for player in run logic function by using updatePlayerDir() from game mechanics. 
+    myGM->getInput();
 }
 
 void RunLogic(void)
@@ -111,8 +116,8 @@ void LoopDelay(void)
 
 void CleanUp(void)
 {
-    delete myGM;
-    delete myPlayer;
+    delete[] myGM;
+    delete[] myPlayer;
     MacUILib_clearScreen();   
     MacUILib_uninit();
 }
