@@ -23,28 +23,45 @@ int objPosArrayList::getSize()
 void objPosArrayList::insertHead(objPos thisPos)
 {
     //error check - check if list size is equal to array capacity if yes at capacity, dont insert.
-    for (int i = listSize; i > 0; i--)
+    if (listSize != arrayCapacity)
     {
-        aList[i].setObjPos(aList[i-1]); //shuffle all elements towards end of tail
+        for (int i = listSize; i > 0; i--)
+        {
+            aList[i].setObjPos(aList[i-1]); //shuffle all elements towards end of tail
+        }
+        aList[0].setObjPos(thisPos);
+        listSize++;
     }
-    aList[0].setObjPos(thisPos);
-
-    listSize++;
+    
 }
 
 void objPosArrayList::insertTail(objPos thisPos)
 {
-
+    if (listSize < arrayCapacity)
+    {
+        aList[listSize].setObjPos(thisPos);
+        listSize++;
+    }
 }
 
 void objPosArrayList::removeHead()
 {
-    
+    if (listSize > 0)
+    {
+        for (int i = 0; i < listSize-1; i++)
+        {
+            aList[i].setObjPos(aList[i+1]); //shuffle all elements towards end of tail
+        }
+        listSize--;
+    }
 }
 
 void objPosArrayList::removeTail()
 {
-
+    if (listSize > 0)
+    {
+        listSize--;
+    }
 }
 
 void objPosArrayList::getHeadElement(objPos &returnPos)
@@ -59,5 +76,5 @@ void objPosArrayList::getTailElement(objPos &returnPos)
 
 void objPosArrayList::getElement(objPos &returnPos, int index)
 {
-
+    returnPos.setObjPos(aList[index]);
 }
