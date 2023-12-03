@@ -46,6 +46,10 @@ void Initialize(void)
     myGM = new GameMechs (36, 18); //board size
     myPlayer = new Player (myGM);
 
+    objPos tempPlayerPos;
+    myPlayer->getPlayerPos(tempPlayerPos);
+    myGM->generateFood(tempPlayerPos);
+    
     //think of when to gen new food; in ppa3 we gen in init and somewhere
     //think if u want to set a debug key to call the food gen routine for verification
     //rmbr gen food requires player reference. provide after player obj is instantiated.
@@ -69,35 +73,40 @@ void DrawScreen(void)
 {
     MacUILib_clearScreen();    
 
-    objPos tempPos;
-    myPlayer->getPlayerPos(tempPos);
+    objPos tempPlayerPos;
+    myPlayer->getPlayerPos(tempPlayerPos);
+
+    objPos tempFoodPos;
+    myGM->getFoodPos(tempFoodPos);
     
     for (int row =0; row<myGM->getBoardSizeY(); row++)
     {
         for (int col=0; col<myGM->getBoardSizeX(); col++)
         {
-            if (row == tempPos.y && col == tempPos.x)
+            if (row == tempPlayerPos.y && col == tempPlayerPos.x)
             {
-                MacUILib_printf("%c", tempPos.symbol);
+                MacUILib_printf("%c", tempPlayerPos.symbol);
+            }
+            else if (row == tempFoodPos.y && col == tempFoodPos.x)
+            {
+                MacUILib_printf("%c", tempFoodPos.symbol);
+            }
+            else if (row == 0||col==0||row==(myGM->getBoardSizeY()-1)||col==(myGM->getBoardSizeX()-1))
+            {
+                MacUILib_printf("#");
             }
             else
             {
-                if (row == 0||col==0||row==(myGM->getBoardSizeY()-1)||col==(myGM->getBoardSizeX()-1))
-                {
-                    MacUILib_printf("#");
-                }
-                else
-                {
-                    MacUILib_printf(" ");
-                }
+                MacUILib_printf(" ");
             }
+            
         }
         MacUILib_printf("\n");
     }
 
     MacUILib_printf("BoardSize: %dx%d, Player Pos: <%d, %d> + %c\n",
         myGM->getBoardSizeX(), myGM->getBoardSizeY(),
-        tempPos.x, tempPos.y, tempPos.symbol);
+        tempPlayerPos.x, tempPlayerPos.y, tempPlayerPos.symbol);
     
     MacUILib_printf("Score: %d\n",
         myGM->getScore());

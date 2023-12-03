@@ -44,6 +44,13 @@ void Player::updatePlayerDir()
             mainGameMechsRef->setLoseFlag();
             break;
         }
+        case 'r':
+        {
+            objPos tempPlayerPos;
+            getPlayerPos(tempPlayerPos);
+            mainGameMechsRef->generateFood(tempPlayerPos);
+            break;
+        }
         //=============================================
         case 'w':
         {
