@@ -9,7 +9,7 @@ GameMechs::GameMechs()
     loseFlag = false;
     score = 0;
 
-    foodPos.setObjPos(-1, -1, 'o'); //init outside game board remove later
+    foodPos.setObjPos(-1, -1, 'o'); 
 }
 
 GameMechs::GameMechs(int boardX, int boardY)
@@ -20,7 +20,7 @@ GameMechs::GameMechs(int boardX, int boardY)
     boardSizeY = boardY;
     loseFlag = false;
     score = 0;
-    foodPos.setObjPos(-1, -1, 'o'); //init outside game board remove later - also think about where to seed the rng
+    foodPos.setObjPos(-1, -1, 'o'); 
 }
 
 GameMechs::~GameMechs()
@@ -81,7 +81,6 @@ int GameMechs::getScore()
 void GameMechs::incrementScore()
 {
     score++;
-    //could change later for other numbers
 }
 
 bool GameMechs::getLoseFlagStatus()
@@ -94,26 +93,23 @@ void GameMechs::setLoseFlag()
     loseFlag = true;
 }
 
-void GameMechs::generateFood(objPos blockOff) //remove
+void GameMechs::generateFood(objPos blockOff) 
 {
-    //generate random x and y coord and make sure they are not border or blockoff position
-    //check x and y against  0 and boardsize x and y
-    // remember objPos class has is posequal; use isntead of comparing element by element
     srand(time(NULL));
     int candidateX =-1;
     int candidateY=-1;
 
     do
     {
-        candidateX = (rand()%(boardSizeX-2))+1; //17
-        candidateY = (rand()%(boardSizeY-2))+1; //7
+        candidateX = (rand()%(boardSizeX-2))+1; 
+        candidateY = (rand()%(boardSizeY-2))+1; 
         foodPos.setObjPos(candidateX, candidateY, 'o');
 
     } while (foodPos.isPosEqual(&blockOff));
     
 }
 
-void GameMechs::getFoodPos(objPos &returnPos) //remove
+void GameMechs::getFoodPos(objPos &returnPos)
 {
     returnPos.setObjPos(foodPos.x, foodPos.y, foodPos.symbol);
 }

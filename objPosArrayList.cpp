@@ -5,7 +5,7 @@
 
 objPosArrayList::objPosArrayList()
 {
-    aList = new objPos[ARRAY_MAX_CAP]; //200 elements on heap
+    aList = new objPos[ARRAY_MAX_CAP];
     listSize = 0;
     arrayCapacity = ARRAY_MAX_CAP;
 }
@@ -22,12 +22,11 @@ int objPosArrayList::getSize()
 
 void objPosArrayList::insertHead(objPos thisPos)
 {
-    //error check - check if list size is equal to array capacity if yes at capacity, dont insert.
     if (listSize != arrayCapacity)
     {
         for (int i = listSize; i > 0; i--)
         {
-            aList[i].setObjPos(aList[i-1]); //shuffle all elements towards end of tail
+            aList[i].setObjPos(aList[i-1]); 
         }
         aList[0].setObjPos(thisPos);
         listSize++;
@@ -50,7 +49,7 @@ void objPosArrayList::removeHead()
     {
         for (int i = 0; i < listSize-1; i++)
         {
-            aList[i].setObjPos(aList[i+1]); //shuffle all elements towards end of tail
+            aList[i].setObjPos(aList[i+1]); 
         }
         listSize--;
     }

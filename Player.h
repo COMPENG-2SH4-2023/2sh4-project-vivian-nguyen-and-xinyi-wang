@@ -27,18 +27,19 @@ class Player
         //- check if player's new head position collides with food.
         // if yes increment score in gm , generate new food, do not remove tail
         // else remove tail and move on
+        bool checkFoodConsumption();
 
         //add self collision
         // if self collide, set loseFlag and exitflag true through GM
         // if ending u need to differentiate the end game state
         // - lost - duisplay lost messsage
         // otherwise display end game message only
+        void increasePlayerLength();
 
     private:
         objPosArrayList *playerPosList; 
         enum Dir myDir;
 
-        // Need a reference to the Main Game Mechanisms
         GameMechs* mainGameMechsRef;
 };
 

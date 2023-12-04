@@ -6,30 +6,22 @@ Player::Player(GameMechs* thisGMRef)
     mainGameMechsRef = thisGMRef;
     myDir = STOP;
 
-    // more actions to be included
-
     objPos tempPos;
     tempPos.setObjPos(mainGameMechsRef->getBoardSizeX()/2, mainGameMechsRef->getBoardSizeY()/2,'*');
 
     playerPosList = new objPosArrayList();
-    playerPosList->insertHead(tempPos);
-    playerPosList->insertHead(tempPos);
-    playerPosList->insertHead(tempPos);
-    playerPosList->insertHead(tempPos);
     playerPosList->insertHead(tempPos);
 }
 
 
 Player::~Player()
 {
-    // delete any heap members here
     delete playerPosList;
 }
 
 objPosArrayList* Player::getPlayerPos()
 {
     return playerPosList;
-    // return the reference to the playerPos arrray list
 }
 
 void Player::updatePlayerDir()
@@ -145,7 +137,32 @@ void Player::movePlayer()
         }
     }
 
-    playerPosList->insertHead(currentHead);
-    playerPosList->removeTail();
+    objPos tempFoodPos;
+    mainGameMechsRef->getFoodPos(tempFoodPos);
+
+    objPos* tempPosPtr = new objPos;
+    playerPosList->getTailElement(*tempPosPtr);
+
+    if (tempFoodPos.isPosEqual(tempPosPtr))
+    {
+        playerPosList->insertHead(currentHead);
+        mainGameMechsRef->generateFood(tempFoodPos);
+    }
+    else
+    {
+        playerPosList->insertHead(currentHead);
+        playerPosList->removeTail();
+    }
+
+    delete tempPosPtr;
 }
 
+bool Player::checkFoodConsumption()
+{
+    
+}
+
+void Player::increasePlayerLength()
+{
+    
+}
