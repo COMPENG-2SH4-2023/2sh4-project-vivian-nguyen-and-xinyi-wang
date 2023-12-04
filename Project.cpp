@@ -1,6 +1,7 @@
 #include <iostream>
 #include "MacUILib.h"
 #include "objPos.h"
+#include "objPosArrayList.h"
 #include "GameMechs.h"
 #include "Player.h"
 
@@ -45,10 +46,10 @@ void Initialize(void)
 
     myGM = new GameMechs (36, 18); //board size
     myPlayer = new Player (myGM);
-
-    objPos tempPlayerPos;
-    myPlayer->getPlayerPos(tempPlayerPos);
+    
+    objPos tempPlayerPos {-1, -1, 'o'};
     myGM->generateFood(tempPlayerPos);
+    //problems after here
     
     //think of when to gen new food; in ppa3 we gen in init and somewhere
     //think if u want to set a debug key to call the food gen routine for verification
@@ -73,8 +74,10 @@ void DrawScreen(void)
 {
     MacUILib_clearScreen();    
 
-    objPos tempPlayerPos;
-    myPlayer->getPlayerPos(tempPlayerPos);
+    bool drawn;
+
+    objPosArrayList* playerBody = myPlayer->getPlayerPos();
+    objPos tempBody;
 
     objPos tempFoodPos;
     myGM->getFoodPos(tempFoodPos);
@@ -82,12 +85,21 @@ void DrawScreen(void)
     for (int row =0; row<myGM->getBoardSizeY(); row++)
     {
         for (int col=0; col<myGM->getBoardSizeX(); col++)
-        {
-            if (row == tempPlayerPos.y && col == tempPlayerPos.x)
+        {   
+            drawn = false;
+            for (int k = 0; k<playerBody->getSize(); k++)
             {
-                MacUILib_printf("%c", tempPlayerPos.symbol);
+                playerBody->getElement(tempBody, k);
+                if (tempBody.x ==col&&tempBody.y==row)
+                {
+                    MacUILib_printf("%c", tempBody.symbol);
+                    drawn = true;
+                    break;
+                }
             }
-            else if (row == tempFoodPos.y && col == tempFoodPos.x)
+            if (drawn) continue;
+
+            if (row == tempFoodPos.y && col == tempFoodPos.x)
             {
                 MacUILib_printf("%c", tempFoodPos.symbol);
             }
@@ -104,12 +116,7 @@ void DrawScreen(void)
         MacUILib_printf("\n");
     }
 
-    MacUILib_printf("BoardSize: %dx%d, Player Pos: <%d, %d> + %c\n",
-        myGM->getBoardSizeX(), myGM->getBoardSizeY(),
-        tempPlayerPos.x, tempPlayerPos.y, tempPlayerPos.symbol);
-    
-    MacUILib_printf("Score: %d\n",
-        myGM->getScore());
+    MacUILib_printf("Score: %d\n", myGM->getScore());
     
     if (myGM->getLoseFlagStatus() == true)
     {
