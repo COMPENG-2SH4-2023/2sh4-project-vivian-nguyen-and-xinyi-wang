@@ -13,7 +13,10 @@ Player::Player(GameMechs* thisGMRef)
 
     playerPosList = new objPosArrayList();
     playerPosList->insertHead(tempPos);
-    // no heap member yet wait for it. 3 to add
+    playerPosList->insertHead(tempPos);
+    playerPosList->insertHead(tempPos);
+    playerPosList->insertHead(tempPos);
+    playerPosList->insertHead(tempPos);
 }
 
 
